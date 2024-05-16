@@ -1,0 +1,106 @@
+<!--Редактировать парфюм-->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <div class="row mx-3">
+                <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
+                <div class="col-md-9 mb-5">
+                    <th:block th:replace="fragments/common-fragments :: info-title(text='Edit perfume', icon='fas fa-edit mr-2')"/>
+                    <form method="post" action="/admin/edit/perfume" enctype="multipart/form-data">
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Название аромата',
+                                    name='perfumeTitle',
+                                    value=(${perfume.getPerfumeTitle()}),
+                                    error=(${perfumeTitleError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Бренд',
+                                    name='perfumer',
+                                    value=(${perfume.getPerfumer()}),
+                                    error=(${perfumerError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Год создания',
+                                    name='year',
+                                    value=(${perfume.getYear()}),
+                                    error=(${yearError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Страна',
+                                    name='country',
+                                    value=(${perfume.getCountry()}),
+                                    error=(${countryError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-select(
+                                    title='Тип аромата',
+                                    name='type',
+                                    options=(${ {'Парфюмерная вода', 'Туалетная вода'} }),
+                                    value=(${perfume.getType()}),
+                                    error=(${typeError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Объем',
+                                    name='volume',
+                                    value=(${perfume.getVolume()}),
+                                    error=(${volumeError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-select(
+                                    title='Пол',
+                                    name='perfumeGender',
+                                    options=(${ {'мужской', 'женский'} }),
+                                    value=(${perfume.getPerfumeGender()}),
+                                    error=(${perfumeGenderError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Верхние ноты',
+                                    name='fragranceTopNotes',
+                                    value=(${perfume.getFragranceTopNotes()}),
+                                    error=(${fragranceTopNotesError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Средние ноты',
+                                    name='fragranceMiddleNotes',
+                                    value=(${perfume.getFragranceMiddleNotes()}),
+                                    error=(${fragranceMiddleNotesError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Базовые ноты',
+                                    name='fragranceBaseNotes',
+                                    value=(${perfume.getFragranceBaseNotes()}),
+                                    error=(${fragranceBaseNotesError})
+                                )"/>
+                                <th:block th:replace="fragments/account-fragments :: edit-perfume-input(
+                                    title='Цена',
+                                    name='price',
+                                    value=(${perfume.getPrice()}),
+                                    error=(${priceError})
+                                )"/>
+                            </div>
+                            <div class="col-md-6">
+                                <div th:if="${perfume.getFilename()}">
+                                    <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}"
+                                         class="rounded mx-auto w-100 mb-2"/>
+                                </div>
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" th:value="${perfume.getId()}"/>
+                        <input type="hidden" name="filename" th:value="${perfume.getFilename()}"/>
+                        <th:block th:replace="fragments/common-fragments :: icon-button(text='Edit', icon='fas fa-edit mr-2')"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!--Бооковая панель для профиля пользователя-->
+<th:block th:fragment="account-sidebar" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <div class="col-md-2">
+        <h4>
+            <i class="fas fa-user-edit mr-1"></i>
+            Профиль
+        </h4>
+        <a class="account-sidebar-link nav-link" href="/user/info">Личные данные</a>
+        <a class="account-sidebar-link nav-link" href="/user/reset">Изменить пароль</a>
+        <th:block sec:authorize="hasAuthority('ADMIN')">
+            <a class="account-sidebar-link nav-link" href="/admin/add/perfume">Добавить аромат</a>
+            <a class="account-sidebar-link nav-link" href="/admin/perfumes">Список ароматов</a>
+            <a class="account-sidebar-link nav-link" href="/admin/orders">Список всех заказов</a>
+            <a class="account-sidebar-link nav-link" href="/admin/users">Список всех пользователей</a>
+        </th:block>
+        <th:block sec:authorize="hasAuthority('USER')">
+            <a class="account-sidebar-link nav-link" href="/order/user/orders">Список заказов</a>
+        </th:block>
+    </div>
+</th:block>
+
+<!--Элементы формы для редактирования ароматов-->
+<th:block th:fragment="edit-perfume-input">
+    <div class="form-group row">
+        <label class="col-sm-4 font-weight-bold col-form-label" th:text="${title} + ':'"></label>
+        <div class="col-sm-8">
+            <input
+                    type="text"
+                    th:name="${name}"
+                    th:value="${value}"
+                    class="form-control" th:classappend="${error} ? ' is-invalid'"
+            />
+            <div th:if="${error}" class="invalid-feedback" th:text="${error}"></div>
+        </div>
+    </div>
+</th:block>
+
+<!--Элементы формы для редактирования ароматов-->
+<th:block th:fragment="edit-perfume-select">
+    <div class="form-group row">
+        <label class="col-sm-4 font-weight-bold col-form-label" th:text="${title} + ':'"></label>
+        <div class="col-sm-8">
+            <select th:name="${name}" class="form-control" th:classappend="${error} ? ' is-invalid'">
+                <option th:each="option : ${options}" th:value="${option}" th:text="${option}"
+                        th:selected="${value == option}"></option>
+            </select>
+            <div th:if="${error}" class="invalid-feedback" th:text="${error}"></div>
+        </div>
+    </div>
+</th:block>
+
+<!--Элементы формы для добавления новых ароматов-->
+<th:block th:fragment="add-perfume-input">
+    <div class="col">
+        <label th:text="${title} + ':'"></label>
+        <input
+                type="text"
+                th:name="${name}"
+                th:placeholder="${placeholder}"
+                th:value="${value}"
+                class="form-control" th:classappend="${error} ? ' is-invalid'"
+        />
+        <div th:if="${error}" class="invalid-feedback" th:text="${error}"></div>
+    </div>
+</th:block>
+
+<!--Элементы формы для добавления новых ароматов-->
+<th:block th:fragment="add-perfume-select">
+    <div class="col">
+        <label th:text="${title} + ':'"></label>
+        <select th:name="${name}" class="form-control" th:classappend="${error} ? ' is-invalid'">
+            <option hidden value=""></option>
+            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+        </select>
+        <div th:if="${error}" class="invalid-feedback" th:text="${error}"></div>
+    </div>
+</th:block>
+
+<!--Информация о пользователе-->
+<th:block th:fragment="user-info">
+    <div class="col-md-4 mb-5">
+        <th:block th:replace="fragments/common-fragments :: info-title(
+            text='Личные данные',
+            icon='fas fa-address-card mr-2'
+        )"/>
+        <th:block th:replace="fragments/common-fragments :: alert-message"/>
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Электронная почта', text=${user.getEmail()})" />
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Имя', text=${user.getFirstName()})" />
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Фамилия', text=${user.getLastName()})" />
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Город', text=${user.getCity()})" />
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Адрес', text=${user.getAddress()})" />
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Телефон', text=${user.getPhoneNumber()})" />
+        <th:block th:replace="fragments/common-fragments :: data-item(title='Почтовый индекс', text=${user.getPostIndex()})" />
+        <a th:with="isUserEditOpen=${#request.getRequestURI() == '/user/info/edit'}"
+           th:href="@{${isUserEditOpen} ? '/user/info' : '/user/info/edit'}"
+           role="button">
+            <th:block th:replace="fragments/common-fragments :: icon-button(
+                text=(${isUserEditOpen} ? 'Скрыть' : 'Редактировать'),
+                icon=(${isUserEditOpen} ? 'fas fa-eye-slash mr-2' : 'fas fa-edit mr-2'),
+                buttonClassName='mt-2'
+            )"/>
+        </a>
+    </div>
+</th:block>

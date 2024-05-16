@@ -1,0 +1,114 @@
+<!--Список парфюмерии-->
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" charset="UTF-8">
+<head th:replace="fragments/common-fragments :: head">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="container d-flex bg-white shadow-sm">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Аромат</h3>
+            </div>
+            <form action="/perfume" method="get">
+                <ul class="list-unstyled components">
+                    <h5>Бренд</h5>
+                    <li class="active mb-2" id="homeSubmenu">
+                        <ul class="list-unstyled">
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('СЛАВА ЗАЙЦЕВ')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('cosmogony')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('БРОКАРЪ АРОМАТЫ ПРИРОДЫ')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('BROCARD DAY DREAMS')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('BROCARD COLOR FEELING')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('Brocard')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('PARFUMS CONSTANTINE')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('MegaCosm')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('Fruttissimo')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('ANNA ZWORYKINA')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('LAB FRAGRANCE')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('s.Oliver PURE SENSE')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('Sergio Nero')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('Zeitun')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('MAGMA')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('NATURA SIBERICA')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('CIEL')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('ROUGE BUNNY ROUGE')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('AMOUAGE')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('NOUVELLE ETOILE')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('НОВАЯ ЗАРЯ')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('VIKON DE PARIS')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-brand-checkbox('ALAN BRAY')"></li>
+                        </ul>
+                    </li>
+
+                    <h5>Пол</h5>
+                    <li class="active mb-2">
+                        <ul class="list-unstyled">
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-gender-checkbox('женский')"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-gender-checkbox('мужской')"></li>
+                        </ul>
+                    </li>
+
+                    <!--Декодирование кириллицы в адресной строке при нажатии на номер страницы-->
+                    <script>
+                        document.addEventListener('click', function(event) {
+                            if (event.target.matches('.page-link')) {
+                                event.preventDefault();
+                                let url = event.target.getAttribute('href');
+                                let decodedUrl = decodeURIComponent(url);
+                                window.location.href = decodedUrl;
+                            }
+                        });
+                    </script>
+
+                    <h5>Цена</h5>
+                    <li class="active mb-2">
+                        <ul class="list-unstyled">
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-price-checkbox(startingPrice=0, endingPrice=20000)"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-price-checkbox(startingPrice=100, endingPrice=5100)"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-price-checkbox(startingPrice=5100, endingPrice=10100)"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-price-checkbox(startingPrice=10100, endingPrice=15100)"></li>
+                            <li th:insert="fragments/perfumes-fragments :: perfumes-price-checkbox(startingPrice=15100, endingPrice=20100)"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </form>
+        </nav>
+        <div class="container mb-5">
+            <div class="container-fluid mt-5 ml-1">
+                <form action="/perfume/search" method="get" style="justify-content: center">
+                    <th:block th:replace="~{fragments/common-fragments :: search(
+                        options=(${ {
+                            { value: 'perfumer', text: 'Бренд' },
+                            { value: 'perfumeTitle', text: 'Название аромата' },
+                            { value: 'country', text: 'Страна-производитель' }
+                        } })
+                    )}"/>
+                </form>
+            </div>
+            <div class="mt-4 ml-1">
+                <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
+                <div class="container-fluid">
+                    <div class="row" th:fragment="list">
+                        <th:block th:if="${page.getContent().size() == 0}"
+                                  th:insert="~{fragments/common-fragments :: empty-result(text='Perfumes not found')}"/>
+                        <th:block th:unless="${page.getContent().size() == 0}" th:each="perfume : ${page.getContent()}">
+                            <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfume})"/>
+                        </th:block>
+                    </div>
+                </div>
+                <th:block th:if="${page.getContent().size() != 0}">
+                    <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
+                </th:block>
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

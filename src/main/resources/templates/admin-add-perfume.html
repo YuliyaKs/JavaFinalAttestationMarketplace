@@ -1,0 +1,123 @@
+<!--Добавление парфюма администратором -->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <div class="row mx-3">
+                <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
+                <div class="col-md-9 mb-5">
+                    <th:block th:replace="fragments/common-fragments :: info-title(
+                        text='Добавить аромат',
+                        icon='fas fa-plus-square mr-2'
+                    )"/>
+                    <br/>
+                    <form method="post" action="/admin/add/perfume" enctype="multipart/form-data">
+                        <div class="form row">
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Название аромата',
+                                name='perfumeTitle',
+                                placeholder='Введите название аромата',
+                                value=(${perfume} ? ${perfume.perfumeTitle} : ''),
+                                error=(${perfumeTitleError})
+                            )"/>
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Бренд',
+                                name='perfumer',
+                                placeholder='Введите бренд',
+                                value=(${perfume} ? ${perfume.perfumer} : ''),
+                                error=(${perfumerError})
+                            )"/>
+                        </div>
+                        <div class="form row mt-3">
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Год создания',
+                                name='year',
+                                placeholder='Введите год создания',
+                                value=(${perfume} ? ${perfume.year} : ''),
+                                error=(${yearError})
+                            )"/>
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Страна-производитель',
+                                name='country',
+                                placeholder='Страна-производитель',
+                                value=(${perfume} ? ${perfume.country} : ''),
+                                error=(${countryError})
+                            )"/>
+                        </div>
+                        <div class="form row mt-3">
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-select(
+                                title='Тип аромата',
+                                name='type',
+                                options=(${ {'Парфюмерная вода', 'Туалетная вода'} }),
+                                error=(${typeError})
+                            )"/>
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Объем',
+                                name='volume',
+                                placeholder='Введите объем',
+                                value=(${perfume} ? ${perfume.volume} : ''),
+                                error=(${volumeError})
+                            )"/>
+                        </div>
+                        <div class="form row mt-3">
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-select(
+                                title='Пол',
+                                name='perfumeGender',
+                                options=(${ {'мужской', 'женский'} }),
+                                error=(${perfumeGenderError})
+                            )"/>
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Верхние ноты',
+                                name='fragranceTopNotes',
+                                placeholder='Введите верхние ноты',
+                                value=(${perfume} ? ${perfume.fragranceTopNotes} : ''),
+                                error=(${fragranceTopNotesError})
+                            )"/>
+                        </div>
+                        <div class="form row mt-3">
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Средние ноты',
+                                name='fragranceMiddleNotes',
+                                placeholder='Введите средние ноты',
+                                value=(${perfume} ? ${perfume.fragranceMiddleNotes} : ''),
+                                error=(${fragranceMiddleNotesError})
+                            )"/>
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Базовые ноты',
+                                name='fragranceBaseNotes',
+                                placeholder='Введите базовые ноты',
+                                value=(${perfume} ? ${perfume.fragranceBaseNotes} : ''),
+                                error=(${fragranceBaseNotesError})
+                            )"/>
+                        </div>
+                        <div class="form row mt-3">
+                            <th:block th:replace="fragments/account-fragments :: add-perfume-input(
+                                title='Цена',
+                                name='price',
+                                placeholder='Введите цену',
+                                value=(${perfume} ? ${perfume.price} : ''),
+                                error=(${priceError})
+                            )"/>
+                            <div class="col" style="margin-top: 35px">
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                        <th:block th:replace="fragments/common-fragments :: icon-button(
+                            text='Добавить',
+                            buttonClassName='mt-3',
+                            icon='fas fa-plus-square mr-2'
+                        )"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

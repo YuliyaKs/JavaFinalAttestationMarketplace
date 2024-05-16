@@ -1,0 +1,82 @@
+<!--Карточка товара-->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common-fragments :: head"></head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container" class="bg-light">
+    <div class="container pt-5 pb-5 bg-white shadow-sm">
+        <div class="row">
+            <div class="col-md-5">
+                <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-100">
+            </div>
+            <div class="col-md-7">
+                <h2 th:text="${perfume.getPerfumeTitle()}"></h2>
+                <h3 th:text="${perfume.getPerfumer()}"></h3>
+                <p>Код продукта: <span th:text="${perfume.getId()}"></span></p>
+                <p class="product-stock" style="color: #54C0A1">В наличии</p>
+                <div class="row ml-1">
+                    <h6 class="mr-5">
+                        <span th:text="${perfume.getPrice()}"></span>.00 руб
+                    </h6>
+                    <form action="/cart/add" method="post">
+                        <button type="submit" name="perfumeId" class="btn btn-success mx-3"
+                                th:value="${perfume.getId()}">
+                            <i class="fas fa-cart-plus mr-2 fa-lg"></i>
+                            ДОБАВИТЬ В КОРЗИНУ
+                        </button>
+                    </form>
+                </div>
+                <br>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>Название аромата:</td>
+                        <td th:text="${perfume.getPerfumeTitle()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Бренд:</td>
+                        <td th:text="${perfume.getPerfumer()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Тип аромата:</td>
+                        <td th:text="${perfume.getType()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Год создания:</td>
+                        <td th:text="${perfume.getYear()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Объем:</td>
+                        <td><span th:text="${perfume.getVolume()}"></span> мл</td>
+                    </tr>
+                    <tr>
+                        <td>Страна-производитель:</td>
+                        <td th:text="${perfume.getCountry()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Пол:</td>
+                        <td th:text="${perfume.getPerfumeGender()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Верхние ноты:</td>
+                        <td th:text="${perfume.getFragranceTopNotes()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Средние ноты:</td>
+                        <td th:text="${perfume.getFragranceMiddleNotes()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Базовые ноты:</td>
+                        <td th:text="${perfume.getFragranceBaseNotes()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>

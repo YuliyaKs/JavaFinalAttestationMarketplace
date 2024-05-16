@@ -1,0 +1,133 @@
+<!--Домашняя (главная) страница-->
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" charset="UTF-8">
+<head th:replace="fragments/common-fragments :: head">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
+<div id="container">
+    <div id="carouselExampleControls" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a th:href="@{/perfume/87}">
+                    <img class="d-block w-100" src="../../static/byFirstSlide.jpg" alt="First slide">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a th:href="@{/perfume/12}">
+                    <img class="d-block w-100" src="../../static/bySecondSlide.jpg" alt="Second slide">
+                </a>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div class="container text-center my-3 mt-5">
+        <h3>БРЕНДЫ</h3>
+        <div id="perfumerCarousel" class="carousel slide w-100" data-ride="carousel">
+            <div class="carousel-inner w-100" role="listbox">
+                <div class="carousel-item row active">
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='СЛАВА ЗАЙЦЕВ', src='../../static/logo01.slava_zaitsev.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='cosmogony', src='../../static/logo02.cosmogony.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='БРОКАРЪ АРОМАТЫ ПРИРОДЫ', src='../../static/logo03.brokar.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='Brocard', src='../../static/logo04.brocard.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='PARFUMS CONSTANTINE', src='../../static/logo05.parfums_constantine.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='MegaCosm', src='../../static/logo06.megacosm.jpg')"/>
+                </div>
+                <div class="carousel-item row">
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='ANNA ZWORYKINA', src='../../static/logo07.anna_zworykina.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='LAB FRAGRANCE', src='../../static/logo08.lab_fragrance.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='Sergio Nero', src='../../static/logo09.sergio_nero.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='Zeitun', src='../../static/logo10.zeitun.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='MAGMA', src='../../static/logo11.magma.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='NATURA SIBERICA', src='../../static/logo12.natura_siberica.jpg')"/>
+                </div>
+                <div class="carousel-item row">
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='CIEL', src='../../static/logo13.ciel.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='ROUGE BUNNY ROUGE', src='../../static/logo14.rouge_bunny_rouge.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='AMOUAGE', src='../../static/logo15.amouage.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='NOUVELLE ETOILE', src='../../static/logo16.nouvelle_etoile.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='НОВАЯ ЗАРЯ', src='../../static/logo17.novaya_zarya.jpg')"/>
+                    <th:block th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='ALAN BRAY', src='../../static/logo18.alan_bray.jpg')"/>
+                </div>
+            </div>
+            <th:block th:replace="fragments/common-fragments :: carousel-indicators('#perfumerCarousel')"/>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card mb-5">
+                    <a th:href="${'/perfume?genders=женский'}">
+                        <img class="img-fluid" src="../../static/allParfumesWoman.jpg">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card mb-5">
+                    <a th:href="${'/perfume?genders=мужской'}">
+                        <img class="img-fluid" src="../../static/allParfumesMan.jpg">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center my-3">
+        <h4>РЕКОМЕНДАЦИИ ДЛЯ ВАС</h4>
+    </div>
+    <div class="container mt-5">
+        <form method="get" action="/perfume/popular">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="perfumeCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="container">
+                                    <div class="row" th:fragment="list">
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[0]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[1]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[2]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[3]})"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container">
+                                    <div class="row" th:fragment="list">
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[4]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[5]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[6]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[7]})"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container">
+                                    <div class="row" th:fragment="list">
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[8]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[9]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[10]})"/>
+                                        <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfumes[11]})"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <th:block th:replace="fragments/common-fragments :: carousel-indicators('#perfumeCarousel')"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
+</body>
+</html>
